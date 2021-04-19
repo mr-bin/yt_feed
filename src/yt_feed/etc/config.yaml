@@ -1,0 +1,38 @@
+DEBUG: false
+
+TG_HTTP_API_TOKEN: ''
+YT_API_KEY: ''
+
+feeds:
+  - tg_channel: '@name_of_tg_channel'
+    yt_channels:
+      - id: 'id_of_yt_channel'
+        count_to_list: 2 # how many video items to request from yt
+        delay: 60 # timeout between requests (in seconds)
+
+logging:
+  version: 1
+  formatters:
+    simple:
+      format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+  handlers:
+    common:
+      class: logging.handlers.TimedRotatingFileHandler
+      level: DEBUG
+      formatter: simple
+      filename: __LOG_PATH__/errors.log
+      atTime: mignight
+      backupCount: 4
+      utc: true
+  loggers:
+    youtube:
+      level: DEBUG
+      handlers: [common]
+      propagate: no
+    telegram:
+      level: DEBUG
+      handlers: [common]
+      propagate: no
+  root:
+    level: DEBUG
+    handlers: [common]
