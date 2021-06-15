@@ -1,2 +1,3 @@
 black==20.8b1
+setuptools==49.0
 zc.buildout==3.0.0b2
