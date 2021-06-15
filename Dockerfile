@@ -27,11 +27,11 @@ RUN pip3 install --upgrade setuptools==49.0
 
 add ./etc /opt/etc
 add ./src /opt/src
-add ./bootstrap.py /opt
 add ./buildout.cfg /opt
 add ./versions.cfg /opt
+add ./requirements.txt /opt
 
-RUN python3 bootstrap.py
-RUN bin/buildout
+RUN pip install -r requirements.txt
+RUN buildout
 
 CMD ["/opt/bin/manage.py"]
