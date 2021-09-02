@@ -1,6 +1,7 @@
 import os
 import asyncio
 import datetime
+import traceback
 import logging.config
 
 from telegram import Bot, ParseMode
@@ -13,6 +14,7 @@ logging.config.dictConfig(config['logging'])
 
 youtube_logger = logging.getLogger('youtube')
 telegram_logger = logging.getLogger('telegram')
+bot_logger = logging.getLogger('bot')
 
 
 def post_messages(bot, channel_name, latest_videos):
@@ -66,8 +68,11 @@ def get_latest_videos(api, channel):
 
 async def periodic(tg_bot, yt_api, tg_channel, yt_channel):
     while True:
-        latest_videos = get_latest_videos(yt_api, yt_channel)
-        post_messages(tg_bot, tg_channel, latest_videos)
+        try:
+            latest_videos = get_latest_videos(yt_api, yt_channel)
+            post_messages(tg_bot, tg_channel, latest_videos)
+        except Exception:
+            bot_logger.debug("Some exception happened", extra={'exception': traceback.print_exc()})
         await asyncio.sleep(yt_channel['delay'])
 
 

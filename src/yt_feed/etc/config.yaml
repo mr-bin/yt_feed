@@ -25,6 +25,10 @@ logging:
       backupCount: 4
       utc: true
   loggers:
+    bot:
+      level: DEBUG
+      handlers: [common]
+      propagate: no
     youtube:
       level: DEBUG
       handlers: [common]
